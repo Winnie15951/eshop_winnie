@@ -1,0 +1,146 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.nav-pills .nav-link {
+  border-radius: 0rem;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: transparent;
+}
+
+.nav-item a {
+  color: #bfcfd5;
+  font-size: 14px;
+  margin-left: 30px;
+}
+
+.card {
+  border-radius: 0px;
+  background-color: transparent;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.card .card-header {
+  padding: 0;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card .card-header button {
+  color: #edeeee;
+  font-size: 16px;
+}
+
+.card .collapse.show {
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+  background-color: #2c3b41;
+}
+
+.card-body {
+  padding: 0px;
+}
+
+.breadcrumb {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 50%;
+  background-color: #eee;
+}
+
+.breadcrumb a {
+  color: #1a2226;
+}
+
+.icon-pr {
+  width: 24px;
+  margin-right: 10px;
+}
+
+.container-fluid {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.main {
+  background-color: #fff;
+  height: 1000px;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  overflow-y: scroll;
+  background-color: #1a2226;
+}
+
+.brand-logo {
+  width: 100%;
+  height: 80px;
+  background-color: #377fa7;
+}
+
+.brand-logo h3 {
+  text-align: center;
+  line-height: 80px;
+  color: #fff;
+  font-size: 18px;
+}
+
+.staff {
+  margin: 20px;
+}
+
+.staff .avatar {
+  width: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.staff .avatar img {
+  width: 100%;
+}
+
+.staff .username {
+  padding-left: 20px;
+  color: #fff;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+.main-bg {
+  background-color: #fff;
+  height: 100%;
+  width: 90%;
+}
+
+.bottom-icon {
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  margin: 20px 0px;
+}
+
+.bottom-icon i {
+  width: 24px;
+  color: #fff;
+  font-size: 24px;
+}
+
+.post-title {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/*# sourceMappingURL=manager.css.map */

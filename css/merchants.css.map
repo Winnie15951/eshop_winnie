@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../scss/merchants.scss"
+    ],
+    "names": [],
+    "file": "merchants.css"
+}
