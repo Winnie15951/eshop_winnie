@@ -6,14 +6,14 @@ require __DIR__ . '/parts/_html_header_manager.php';
 
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if (empty($id)) {
-    header('Location:_main_demo_manager.php');
+    header('Location:_main_demo_customers.php');
     exit;
 }
 
-$sql = " SELECT * FROM eshop_manager WHERE id=$id ";
+$sql = " SELECT * FROM customers WHERE id=$id ";
 $row = $pdo->query($sql)->fetch();
 if (empty($row)) {
-    header('Location:_main_demo_manager.php');
+    header('Location:_main_demo_customers.php');
     exit;
 }
 
@@ -39,8 +39,8 @@ if (empty($row)) {
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">主頁</a></li>
-                <li class="breadcrumb-item"><a href="./eshop_manager.php">後台帳號管理</a></li>
-                <li class="breadcrumb-item active" aria-current="page">編輯管理員</li>
+                <li class="breadcrumb-item"><a href="./eshop_customers.php">會員資料管理</a></li>
+                <li class="breadcrumb-item active" aria-current="page">編輯會員</li>
             </ol>
         </nav>
         <div class="container">
@@ -51,7 +51,7 @@ if (empty($row)) {
                     </div>
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">編輯管理員資料</h5>
+                            <h5 class="card-title">編輯會員資料</h5>
 
                             <form name="form1" onsubmit="checkForm(); return false;" novalidate>
                                 <input type="hidden" name="id" value="<?= $row['id'] ?>">
@@ -62,30 +62,48 @@ if (empty($row)) {
                                     <small class="form-text error-msg"></small>
                                 </div>
                                 <div class="form-group">
-                                    <label for="account"><span class="red-stars">**</span>帳號</label>
-                                    <input type="text" class="form-control" id="account" name="account" value="<?= htmlentities($row['account']) ?>">
+                                    <label for="gender"><span class="red-stars"></span>性別</label>
+                                    <input type="text" class="form-control" id="gender" name="gender" required value="<?= htmlentities($row['gender']) ?>">
                                     <small class="form-text error-msg"></small>
                                 </div>
-                                <div class="form-group">
-                                    <label for="password"><span class="red-stars">**</span>密碼</label>
-                                    <input type="tel" class="form-control" id="password" name="password" value="<?= htmlentities($row['password']) ?>">
-                                    <small class="form-text error-msg"></small>
-                                </div>
-                                <div class="form-group">
-                                    <label for="department"><span class="red-stars">**</span>部門</label>
-                                    <input type="text" class="form-control" id="department" name="department" required value="<?= htmlentities($row['department']) ?>">
-                                    <small class="form-text error-msg"></small>
-                                </div>
-
                                 <div class="form-group">
                                     <label for="birthday">生日</label>
                                     <input type="date" class="form-control" id="birthday" name="birthday" value="<?= htmlentities($row['birthday']) ?>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="age">年齡</label>
+                                    <input type="text" class="form-control" id="age" name="age" value="<?= htmlentities($row['age']) ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="phone_number"><span class="red-stars">**</span>電話</label>
                                     <input type="tel" class="form-control" id="phone_number" name="phone_number" value="<?= htmlentities($row['phone_number']) ?>" pattern="09\d{2}-?\d{3}-?\d{3}">
                                     <small class="form-text error-msg"></small>
                                 </div>
+                                <div class="form-group">
+                                    <label for="address"><span class="red-stars">**</span>地址</label>
+                                    <input type="text" class="form-control" id="address" name="address" required value="<?= htmlentities($row['address']) ?>">
+                                    <small class="form-text error-msg"></small>
+                                </div>
+
+                                <div class="form-group">
+                            <label for="email"><span class="red-stars">**</span> email</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                   value="<?= htmlentities($row['email']) ?>">
+                            <small class="form-text error-msg"></small>
+                        </div>
+                                <div class="form-group">
+                                    <label for="password"><span class="red-stars">**</span>密碼</label>
+                                    <input type="tel" class="form-control" id="password" name="password" value="<?= htmlentities($row['password']) ?>">
+                                    <small class="form-text error-msg"></small>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="e_points"><span class="red-stars"></span>e_points</label>
+                                    <input type="text" class="form-control" id="e_points" name="e_points" required value="<?= htmlentities($row['e_points']) ?>">
+                                    <small class="form-text error-msg"></small>
+                                </div>
+                                
+                                
                                 <input type="hidden" name="creat_date" value="<?= $row['creat_date'] ?>">
 
 
@@ -106,20 +124,28 @@ if (empty($row)) {
 <?php include __DIR__ . '/parts/_scripts.php'; ?>
 <script>
     const phone_number_pattern = /^09\d{2}-?\d{3}-?\d{3}$/;
+    const email_pattern = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+
     const $name = document.querySelector('#name');
-    const $account = document.querySelector('#account');
-    const $password = document.querySelector('#password');
-    const $department = document.querySelector('#department');
+    const $gender = document.querySelector('#gender');
     const $birthday = document.querySelector('#birthday');
+    const $age = document.querySelector('#age');
     const $phone_number = document.querySelector('#phone_number');
-    // const r_fields = [$name, $email, $mobile];
+    const $address = document.querySelector('#address');
+    const $email = document.querySelector('#email');
+    const $password = document.querySelector('#password');
+    const $e_points = document.querySelector('#e_points');
+    
+    
+    
+    // const r_fields = [$name , $account , $password , $department , $birthday , $phone_number ];
     const infobar = document.querySelector('#infobar');
     const submitBtn = document.querySelector('button[type=submit]');
 
     function checkForm() {
         let isPass = true;
 
-        // r_fields.forEach(el=>{
+        // r_fields.forEach(el => {
         //     el.style.borderColor = '#CCCCCC';
         //     el.nextElementSibling.innerHTML = '';
         // });
@@ -130,11 +156,20 @@ if (empty($row)) {
             $name.style.borderColor = 'red';
             $name.nextElementSibling.innerHTML = '請填寫正確的姓名';
         }
-
-        if ($account.value.length < 2) {
+        if (!phone_number_pattern.test($phone_number.value)) {
             isPass = false;
-            $account.style.borderColor = 'red';
-            $account.nextElementSibling.innerHTML = '請填寫帳號';
+            $phone_number.style.borderColor = 'red';
+            $phone_number.nextElementSibling.innerHTML = '請填寫正確的手機號碼';
+        }
+        if ($address.value.length < 2) {
+            isPass = false;
+            $address.style.borderColor = 'red';
+            $address.nextElementSibling.innerHTML = '請填寫詳細地址';
+        }
+        if(! email_pattern.test($email.value)) {
+            isPass = false;
+            $email.style.borderColor = 'red';
+            $email.nextElementSibling.innerHTML = '請填寫正確格式的電子郵箱';
         }
 
         if ($password.value.length < 2) {
@@ -143,22 +178,10 @@ if (empty($row)) {
             $password.nextElementSibling.innerHTML = '請填寫密碼';
         }
 
-        if ($department.value.length < 2) {
-            isPass = false;
-            $department.style.borderColor = 'red';
-            $department.nextElementSibling.innerHTML = '請填寫所屬部門';
-        }
-
-        if (!phone_number_pattern.test($phone_number.value)) {
-            isPass = false;
-            $phone_number.style.borderColor = 'red';
-            $phone_number.nextElementSibling.innerHTML = '請填寫正確的手機號碼';
-        }
-
         if (isPass) {
             const fd = new FormData(document.form1);
 
-            fetch('_deposit_manager_edit_api.php', {
+            fetch('_deposit_customers_edit_api.php', {
                     method: 'POST',
                     body: fd
                 })
@@ -170,7 +193,7 @@ if (empty($row)) {
                         infobar.className = "alert alert-success";
 
                         setTimeout(() => {
-                            location.href = '<?= $_SERVER['HTTP_REFERER'] ?? "_main_demo_manager.php" ?>';
+                            location.href = '<?= $_SERVER['HTTP_REFERER'] ?? "_main_demo_customers.php" ?>';
                         }, 100)
 
                     } else {
@@ -178,7 +201,7 @@ if (empty($row)) {
                         infobar.className = "alert alert-danger";
                         submitBtn.style.display = 'block';
                         setTimeout(() => {
-                            location.href = '<?= $_SERVER['HTTP_REFERER'] ?? "_main_demo_manager.php" ?>';
+                            location.href = '<?= $_SERVER['HTTP_REFERER'] ?? "_main_demo_customers.php" ?>';
                         }, 300)
                     }
                     infobar.style.display = 'block';

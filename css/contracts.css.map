@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,UAAU,CAAC;EACT,KAAK,EAAE,GAAG;CACX;;AAED,AAAA,UAAU,CAAC;EACT,KAAK,EAAE,GAAG;CACX",
+    "sources": [
+        "../eShop-backend_send_photo_fail/scss/contracts.scss"
+    ],
+    "names": [],
+    "file": "contracts.css"
+}

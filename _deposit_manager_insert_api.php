@@ -34,7 +34,7 @@ if(! preg_match('/^09\d{2}-?\d{3}-?\d{3}$/', $_POST['phone_number'])){
 $sql = "INSERT INTO `eshop_manager`(
 `name`, `account`, `password`,
  `department`, `birthday`,`phone_number`,`creat_date`
- ) VALUES (?, ?, ?, ?, ?, ?, NOW())";
+ ) VALUES (?, ?, SHA1(?), ?, ?, ?, NOW())";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([

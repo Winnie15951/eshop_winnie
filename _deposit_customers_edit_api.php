@@ -36,27 +36,31 @@ if(! preg_match('/^09\d{2}-?\d{3}-?\d{3}$/', $_POST['phone_number'])){
 }
 
 
-$sql = "UPDATE `eshop_manager` SET 
+$sql = "UPDATE `customers` SET 
     `name`=?,
-    `account`=?,
-    `password`=SHA1(?),
-    `department`=?,
+    `gender`=?,
     `birthday`=?,
+    `age`=?,
     `phone_number`=?,
+    `address`=?,
+    `email`=?,
+    `password`=SHA1(?),
+    `e_points`=?,
     `creat_date`=? 
     WHERE `id`=?";
+
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
     $_POST['name'],
-    $_POST['account'],
-    $_POST['password'],
-    $_POST['department'],
+    $_POST['gender'],
     $_POST['birthday'],
+    $_POST['age'],
     $_POST['phone_number'],
-    $_POST['creat_date'],
-    $_POST['id']
-
+    $_POST['address'],
+    $_POST['email'],
+    $_POST['password'],
+    $_POST['e_points']
 ]);
 
 if($stmt->rowCount()){

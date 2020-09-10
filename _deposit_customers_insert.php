@@ -1,8 +1,8 @@
 <?php
-$page_title = '新增管理員資料';
-$page_name = 'menager-insert';
+$page_title = '新增會員資料';
+$page_name = 'customers-insert';
 require __DIR__ . '/parts/_db_connect_elivia.php';
-// require __DIR__ . '/_manager_required.php';
+// require __DIR__ . '/_customers_required.php';
 ?>
 <?php require __DIR__ . '/parts/_html_header_manager.php'; ?>
 <div class="container-fluid">
@@ -24,7 +24,7 @@ require __DIR__ . '/parts/_db_connect_elivia.php';
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">主頁</a></li>
-                <li class="breadcrumb-item"><a href="./eshop_manager.php">後台帳號管理</a></li>
+                <li class="breadcrumb-item"><a href="./eshop_customers.php">會員資料管理</a></li>
                 <li class="breadcrumb-item active" aria-current="page">新增管理員</li>
             </ol>
         </nav>
@@ -36,7 +36,7 @@ require __DIR__ . '/parts/_db_connect_elivia.php';
                     </div>
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">新增管理員資料</h5>
+                            <h5 class="card-title">新增會員資料</h5>
 
                             <form name="form1" onsubmit="checkForm(); return false;" novalidate>
                                 <div class="form-group">
@@ -45,31 +45,44 @@ require __DIR__ . '/parts/_db_connect_elivia.php';
                                     <small class="form-text error-msg"></small>
                                 </div>
                                 <div class="form-group">
-                                    <label for="account"><span class="red-stars">**</span>帳號</label>
-                                    <input type="text" class="form-control" id="account" name="account">
+                                    <label for="gender"><span class="red-stars"></span>性別</label>
+                                    <input type="text" class="form-control" id="gender" name="gender" required>
                                     <small class="form-text error-msg"></small>
                                 </div>
-                                <div class="form-group">
-                                    <label for="password"><span class="red-stars">**</span>密碼</label>
-                                    <input type="tel" class="form-control" id="password" name="password">
-                                    <small class="form-text error-msg"></small>
-                                </div>
-                                <div class="form-group">
-                                    <label for="department"><span class="red-stars">**</span>部門</label>
-                                    <input type="text" class="form-control" id="department" name="department" required>
-                                    <small class="form-text error-msg"></small>
-                                </div>
-
                                 <div class="form-group">
                                     <label for="birthday">生日</label>
                                     <input type="date" class="form-control" id="birthday" name="birthday">
+                                </div>
+                                <div class="form-group">
+                                    <label for="age"><span class="red-stars"></span>年齡</label>
+                                    <input type="text" class="form-control" id="age" name="age" required>
+                                    <small class="form-text error-msg"></small>
                                 </div>
                                 <div class="form-group">
                                     <label for="phone_number"><span class="red-stars">**</span>電話</label>
                                     <input type="tel" class="form-control" id="phone_number" name="phone_number" pattern="09\d{2}-?\d{3}-?\d{3}">
                                     <small class="form-text error-msg"></small>
                                 </div>
+                                <div class="form-group">
+                                    <label for="address">address</label>
+                                    <textarea class="form-control" name="address" id="address" cols="30" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email"><span class="red-stars">**</span> email</label>
+                                    <input type="email" class="form-control" id="email" name="email">
+                                    <small class="form-text error-msg"></small>
+                                </div>
 
+                                <div class="form-group">
+                                    <label for="password"><span class="red-stars">**</span>密碼</label>
+                                    <input type="tel" class="form-control" id="password" name="password">
+                                    <small class="form-text error-msg"></small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="e_points"><span class="red-stars"></span>e_points</label>
+                                    <input type="text" class="form-control" id="e_points" name="e_points" required>
+                                    <small class="form-text error-msg"></small>
+                                </div>
 
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
@@ -89,12 +102,20 @@ require __DIR__ . '/parts/_db_connect_elivia.php';
 <?php include __DIR__ . '/parts/_scripts.php'; ?>
 <script>
     const phone_number_pattern = /^09\d{2}-?\d{3}-?\d{3}$/;
+    const email_pattern = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+
     const $name = document.querySelector('#name');
-    const $account = document.querySelector('#account');
-    const $password = document.querySelector('#password');
-    const $department = document.querySelector('#department');
+    const $gender = document.querySelector('#gender');
     const $birthday = document.querySelector('#birthday');
+    const $age = document.querySelector('#age');
     const $phone_number = document.querySelector('#phone_number');
+    const $address = document.querySelector('#address');
+    const $email = document.querySelector('#email');
+    const $password = document.querySelector('#password');
+    const $e_points = document.querySelector('#e_points');
+    
+    
+    
     // const r_fields = [$name , $account , $password , $department , $birthday , $phone_number ];
     const infobar = document.querySelector('#infobar');
     const submitBtn = document.querySelector('button[type=submit]');
@@ -113,11 +134,20 @@ require __DIR__ . '/parts/_db_connect_elivia.php';
             $name.style.borderColor = 'red';
             $name.nextElementSibling.innerHTML = '請填寫正確的姓名';
         }
-
-        if ($account.value.length < 2) {
+        if (!phone_number_pattern.test($phone_number.value)) {
             isPass = false;
-            $account.style.borderColor = 'red';
-            $account.nextElementSibling.innerHTML = '請填寫帳號';
+            $phone_number.style.borderColor = 'red';
+            $phone_number.nextElementSibling.innerHTML = '請填寫正確的手機號碼';
+        }
+        if ($address.value.length < 2) {
+            isPass = false;
+            $address.style.borderColor = 'red';
+            $address.nextElementSibling.innerHTML = '請填寫詳細地址';
+        }
+        if(! email_pattern.test($email.value)) {
+            isPass = false;
+            $email.style.borderColor = 'red';
+            $email.nextElementSibling.innerHTML = '請填寫正確格式的電子郵箱';
         }
 
         if ($password.value.length < 2) {
@@ -126,22 +156,14 @@ require __DIR__ . '/parts/_db_connect_elivia.php';
             $password.nextElementSibling.innerHTML = '請填寫密碼';
         }
 
-        if ($department.value.length < 2) {
-            isPass = false;
-            $department.style.borderColor = 'red';
-            $department.nextElementSibling.innerHTML = '請填寫所屬部門';
-        }
+       
 
-        if (!phone_number_pattern.test($phone_number.value)) {
-            isPass = false;
-            $phone_number.style.borderColor = 'red';
-            $phone_number.nextElementSibling.innerHTML = '請填寫正確的手機號碼';
-        }
+        
 
         if (isPass) {
             const fd = new FormData(document.form1);
 
-            fetch('_deposit_manager_insert_api.php', {
+            fetch('_deposit_customers_insert_api.php', {
                     method: 'POST',
                     body: fd
                 })
@@ -155,7 +177,7 @@ require __DIR__ . '/parts/_db_connect_elivia.php';
                             infobar.classList.replace('alert-danger', 'alert-success')
                         }
                         setTimeout(() => {
-                            location.href = 'eshop_manager.php';
+                            location.href = 'eshop_customers.php';
                         }, 100)
                     } else {
                         infobar.innerHTML = obj.error || '新增失敗';
